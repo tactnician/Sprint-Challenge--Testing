@@ -3,6 +3,10 @@ const request = require('supertest');
 const db = require('../data/dbConfig')
 
 describe('Routes', () => {
+
+    afterEach( async () => {
+        await db('games').truncate();
+    })
     
     describe('POST /games', () => {
         it('should return status 201 if successful or 422 if fails', async () => {
@@ -25,14 +29,17 @@ describe('Routes', () => {
     })
     
     describe('GET /games', () => {
-        it('should return status 200', (done) => {
-            
+        it('should return status 200', async () => {
+            const res = await request('router').get('/games');
+            expect(res.status).toBe(200)
         })
-        it('should return an array', (done) => {
-            
+        it('should return an array', async () => {
+            const res = await request(router).get('/games');
+            expect(res.body).toHaveLength(1)
         })
-        it('should return JSON', (done) => {
-            
+        it('should return JSON', async () => {
+            const res = await request(router).get('/games');
+            expect(res.type).toBe('application/json')
         })
     })
     
