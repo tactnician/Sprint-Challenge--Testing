@@ -1,17 +1,26 @@
 const router = require('../config/routes');
 const request = require('supertest');
+const db = require('../data/dbConfig')
 
 describe('Routes', () => {
     
     describe('POST /games', () => {
         it('should return status 201 if successful or 422 if fails', async () => {
-            
+            const res = await request(router).post('/games')
+            expect(res.status).toBe(201 || 422)
         })
         it('should insert the provided game', async () => {
-            
+            await gamesDb.insert({title: 'Pacman', genre: 'Arcade'})
+            const games = await db('games');
+            expect('games').toHaveLength(1)
         })
         it('should return an id', async () => {
-            
+            const res = await request(router).post('/games');
+            expect(res.body).objectContaining({
+                id: expect.any(Number),
+                title: expect.any(String),
+                genre: expect.any(String)
+            })
         })
     })
     
