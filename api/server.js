@@ -2,11 +2,12 @@ const express = require('express');
 
 const server = express();
 
-// const configRoutes = require('../config/routes');
+const configRoutes = require('../config/routes');
 
 server.use(express.json());
 
-// configRoutes(server);
+configRoutes(server);
+
 server.get('/', (req, res) => {
     res.status(200).json({api: 'sanity check'})
 });
